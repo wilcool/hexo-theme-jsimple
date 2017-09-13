@@ -3,7 +3,7 @@ archives: Archives
 about: About
 categories: Categories
 search: Search
-searchPlaceHolder: Input Search key Words Here
+searchPlaceHolder: Search...
 tags: Tags
 tagcloud: Tag Cloud
 prev: Prev
@@ -19,6 +19,8 @@ category: Category
 tag: Tag
 connect: 'Connect With Us'
 post_total_count: There are %d posts in total till now.
+tag_total_count: There are %d tags in total till now.
+category_total_count: There are %d categories in total till now.
 read_more: Continue Reading →
 contents: Contents
 none: None
@@ -29,3 +31,11 @@ insight:
     categories: 'Categories'
     tags: 'Tags'
     untitled: '(Untitled)'
+
+cheers:
+  um: Um..
+  ok: OK
+  nice: Nice
+  good: Good
+  great: Great
+  excellent: Excellent

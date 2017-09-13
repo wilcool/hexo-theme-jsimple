@@ -17,6 +17,8 @@ var SimpleCore = {
     //外部调用初始化
     init: function (params) {
         SimpleCore.initParams(params);
+        SimpleCore.initScrollSpy();//post menu
+        SimpleCore.checkedMenu();
         $(window).resize(function () {
             SimpleCore.syncSize();
         });
@@ -51,10 +53,46 @@ var SimpleCore = {
             e.preventDefault();
             SimpleCore.goTop();
         });
+        $(document).on('click', '.menu-expand', function (e) {
+            e.preventDefault();
+            SimpleCore.switchMenu();
+        });
+        SimpleCore.showMenu();
         SimpleCore.changeReadModel();
         SimpleCore.setPageCurrent();
         SimpleCore.setBuildingTime();
         SimpleCore.syncSize();
+    },
+    checkedMenu: function () {//左侧及顶部菜单
+        var path = window.location.pathname;
+        $(".nav-menu>a").each(function (i,a) {
+            var p = $(a).attr("href");
+            if ((p != "/" && path.indexOf(p) == 0) || (p == "/" && path == p)) {
+                $(this).addClass("hover").siblings().removeClass("hover");
+            }
+        })
+        $(".page-title li>a").each(function (i,a) {
+            var p = $(a).attr("href");
+            if ((p != "/" && path.indexOf(p) == 0) || (p == "/" && path == p)) {
+                $(this).parent("li").addClass("active").siblings().removeClass("active");
+            }
+        })
+    },
+    showMenu: function () {//文章菜单
+        if (SimpleCore.getLocalData('menu-mode') == 'hide') {
+            $(".fixed-menu-list").hide();
+        } else {
+            $(".fixed-menu-list").show();
+        }
+    },
+    switchMenu: function () {
+        if ($(".fixed-menu-list").is(":hidden")) {
+            SimpleCore.setLocalData('menu-mode', "show");
+            $(".fixed-menu-list").show();
+        } else {
+            SimpleCore.setLocalData('menu-mode', "hide");
+            $(".fixed-menu-list").hide();
+        }
     },
     goTop: function () {
         $("html, body").animate({scrollTop: 0}, 200);
@@ -76,7 +114,7 @@ var SimpleCore = {
         });
     },
     scrollCallback: function () {
-        var top = document.body.scrollTop;
+        var top = document.body.scrollTop || document.documentElement.scrollTop;//#Compatibility issues
         if (top > 100) {
             $('.fixed-btn').show();
         } else {
@@ -188,5 +226,26 @@ var SimpleCore = {
         var now = new Date();
         var ile = now.getTime() - urodz.getTime();
         $('#siteBuildingTime').html(Math.floor(ile / (1000 * 60 * 60 * 24)));
+    },
+    initScrollSpy: function () {
+        var tocSelector = '.post-toc';
+        var $tocElement = $(tocSelector);
+        var activeCurrentSelector = '.active-current';
+
+        $tocElement
+            .on('activate.bs.scrollspy', function () {
+                var $currentActiveElement = $(tocSelector + ' .active').last();
+
+                removeCurrentActiveClass();
+                $currentActiveElement.addClass('active-current');
+            })
+            .on('clear.bs.scrollspy', removeCurrentActiveClass);
+
+        $('body').scrollspy({ target: tocSelector });
+
+        function removeCurrentActiveClass () {
+            $(tocSelector + ' ' + activeCurrentSelector)
+                .removeClass(activeCurrentSelector.substring(1));
+        }
     }
 }

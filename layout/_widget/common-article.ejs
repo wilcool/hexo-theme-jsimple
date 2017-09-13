@@ -1,40 +1,83 @@
 <div class="main-inner">
     <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
         <div class="post-header">
-            <div class="post-author clearfix">
-                <a class="avatar fleft" href="<%= post.authorLink %>" target="_blank">
-                    <img width="48" src="<%= post.avatar %>" alt="avatar"/>
-                </a>
-                <p><span class="label">作者</span>
-                    <a href="<%= post.authorAbout %>" target="_blank"><%= post.author %></a>
-                    <span title="最后编辑于<%= date(post.date) %>"><%= date(post.date) %></span>
-                </p>
-                <p><%= post.authorDesc %></p>
-            </div>
-            <h2 class="post-title"><%- post.title %></h2>
-            <div class="post-meta">
-                本文总共<%- strip_html(post.content).length %>个字 | 您是第<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>位看到它们的小伙伴
-            </div>
+            <!--<% if(post.layout && post.layout === 'post') { %>
+                <div class="post-author clearfix">
+                    <a class="avatar fleft" href="<%= post.authorLink || config.url %>" target="_blank">
+                        <img width="48" src="<%= post.avatar || theme.avatarImage %>" alt="avatar"/>
+                    </a>
+                    <p><span class="label">作者</span>
+                        <a href="<%= post.authorAbout || config.url %>" target="_blank"><%= post.author || config.author %></a>
+                        <span title="发布于<%= date(post.date) %>"><%= date(post.date) %></span>
+                    </p>
+                    &lt;!&ndash; <p><%= post.authorDesc || theme.coverTitle %></p> &ndash;&gt;
+                    <p class="post-meta">本文总共<%- strip_html(post.content).length %>个字 | 您是第 位看到它们的小伙伴</p>
+                </div>
+            <% } %>-->
+            <h2 class="post-title post-title-c"><%- post.title %></h2>
+            <% if(is_post()) { %>
+            <p class="box_c">
+                <span class="d_time">发布时间：<%= date(post.date) %></span>
+                <span>来源：<a href="<%= post.originLink || config.url %>"><%= post.originAuthor || config.author %></a></span>
+                <span>阅读（<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>）</span>
+            </p>
+            <% } %>
         </div>
         <div class="post-content markdown-body">
             <%- post.content %>
         </div>
-        <div class="post-tool">
-            <a class="btn-thumbs-up" href="javascript:void(0);" data-cid="52" title="95">
-                <i class="fa fa-thumbs-up" aria-hidden="true"></i> 打赏
-            </a>
-        </div>
-        <% if (post.tags){ %>
-        <div class="post-tags"><%= __('tags') %>：
+
+        <% if(post.layout && post.layout === 'post') { %>
+            <% if(theme.postDeclare) { %>
+            <div class="blockquote-center">
+                <p><%= theme.postDeclare %></p>
+            </div>
+            <% } %>
+
+            <div style="text-align:center; color:#ccc; font-size:14px; padding: 20px 0;">
+             ------本文结束
+             &nbsp;<i class="fa fa-paw"></i>&nbsp;
+             感谢阅读------
+            </div>
+        <% } %>
+
+        <% if (theme.reward.enable){ %>
+            <div class="post-tool">
+                <a class="btn-thumbs-up" href="javascript:void(0);" data-cid="52" title="95">
+                    <i class="fa fa-thumbs-up" aria-hidden="true"></i> 打赏
+                </a>
+            </div>
+        <% } %>
+
+        <% if (post.layout && post.layout === 'post' && post.tags){ %>
+        <div class="post-tags">
             <% post.tags.each(function(tag){ %>
-            <a href="<%- url_for(tag.path) %>"><%= tag.name %></a>
+            <a href="<%- url_for(tag.path) %>"># <%= tag.name %></a>
             <% }) %>
         </div>
         <% } %>
+
+        <% if (post.layout && post.layout === 'post' && (post.prev || post.next)){ %>
+        <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <% if (post.prev){ %>
+                <a href="<%= url_for(post.prev.path) %>" rel="prev" title="<%= post.prev.title %>">
+                    <i class="fa fa-chevron-left"></i> <%= post.prev.title %>
+                </a>
+                <% } %>
+            </div>
+            <span class="post-nav-divider"></span>
+            <div class="post-nav-prev post-nav-item">
+                <% if (post.next){ %>
+                <a href="<%= url_for(post.next.path) %>" rel="next" title="<%= post.next.title %>">
+                    <%= post.next.title %> <i class="fa fa-chevron-right"></i>
+                </a>
+                <% } %>
+            </div>
+        </div>
+        <% } %>
+
     </article>
-    <% if(post.layout && post.layout === 'post' && theme.postDeclare) { %>
-    <p><%= theme.postDeclare %></p>
-    <% } %>
-    <%- partial('_partial/comments', {post: post}) %>
+    <%- partial('_widget/comments/changyan', {post: post}) %>
+    <%- partial('_widget/comments/gitment', {post: post}) %>
 </div>
-<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>

@@ -41,24 +41,68 @@
 <div id="wrapper" class="clearfix">
     <div id="body">
         <div class="main" id="main">
-            <%- partial('_partial/middleCover', {cache: !config.relative_link}) %>
+            <%- partial('_partial/middleCover', {}, {cache: !config.relative_link}) %>
+            <%- partial('_partial/topMenu', {}, {cache: !config.relative_link}) %>
             <%- body %>
         </div><!-- end #main-->
     </div><!-- end #body -->
-    <%- partial('_partial/footer', null, {cache: !config.relative_link}) %>
+    <%- partial('_partial/footer', {}, {cache: !config.relative_link}) %>
 </div>
+
+<% if (is_post()){ %>
+<div class="fixed-menu">
+    <a class="menu-expand" href="javascript:void(0);"> <i class="fa fa-list"></i></a>
+</div>
+<div class="fixed-menu-list">
+    <div class="sidebar-nav-toc">文章目录</div>
+    <div class="post-toc">
+        <div class="post-toc-content"><%- toc(page.content, { "class": "nav", list_number: true }) %></div>
+    </div>
+</div>
+<% } %>
+
 <div class="fixed-btn">
     <a class="btn-gotop" href="javascript:"> <i class="fa fa-angle-up"></i></a>
 </div>
+
+<%- js("//cdn.bootcss.com/jquery/3.1.1/jquery.min.js") %>
+<%- js(['js/InsightSearch','js/scrollspy','js/SimpleCore','js/dytitle']) %>
+
 <script>
     $(function () {
         SimpleCore.init({
             buildingTime: '<%= theme.siteBuildingTime %>',
             current: $('.post-tags').length > 0 ? 'post' : 'archive',
-            wxMpImg: '/images/weixin-mp.png',
-            donateImg: '/images/donate-qr.png',
+            wxMpImg: '<%= theme.wechat.image %>',
+            donateImg: '<%= theme.reward.image %>',
         });
     });
 </script>
+
+<% if (theme.baidu_analytics){ %>
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?<%= theme.baidu_analytics%>";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+<% } %>
+
+<% if (theme.baidu_push){ %>
+    <%- js(['js/third/baidu_push']) %>
+<% } %>
+
+<% if (is_post()){ %>
+    <% if (theme.leancloud_visitors.enable){ %>
+        <%- js("https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js") %>
+        <script>AV.initialize("<%= theme.leancloud_visitors.app_id %>", "<%= theme.leancloud_visitors.app_key %>");</script>
+        <%- js("js/third/lean_analytics") %>
+    <% } else { %>
+        <%- js("//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js") %>
+    <% } %>
+<% } %>
 </body>
 </html>

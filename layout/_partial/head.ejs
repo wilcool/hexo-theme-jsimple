@@ -11,23 +11,27 @@
 <meta http-equiv="mobile-agent" content="format=html5; url=<%= config.url %>">
 <meta name="author" content="<%= config.author %>">
 <%- css('//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css') %>
-<%- css(['/css/SimpleStyle.min.css']) %>
+<%- css(['/css/SimpleStyle.css']) %>
+<%- css(['/css/custom.css']) %>
+<% if (is_post()){ %>
+<%- css(['/css/highlight/highlight.css']) %>
+<% } %>
 <% if (theme.favicon){ %>
 <%- favicon_tag(theme.favicon) %>
 <% } %>
 <%
 var siteTitle = page.title;
 if (is_archive()) {
-    siteTitle = '归档集';
+    siteTitle = __('archives');
     if (is_month()) {
         siteTitle += '- ' + page.year + '/' + page.month;
     } else if (is_year()) {
         siteTitle += '- ' + page.year;
     }
 } else if (is_category()) {
-    siteTitle = '分类 - ' + page.category;
+    siteTitle = __('categories') + ' - ' + page.category;
 } else if (is_tag()) {
-    siteTitle = '标签 - ' + page.tag;
+    siteTitle = __('tags') + ' - ' + page.tag;
 }
 %>
 <title><% if (siteTitle){ %><%= __(siteTitle.toLowerCase()) %> - <% } %><%= config.title %><% if (is_home()){ %> - <%= config.subtitle %><% } %></title>
@@ -36,7 +40,7 @@ var keywords;
 if (page.keywords) {
     keywords = page.keywords;
 } else {
-    keywords = config.keywords;
+    keywords = theme.keywords;
 }
 %>
 <meta name="keywords" content="<%= keywords %>">

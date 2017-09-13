@@ -1,30 +1,31 @@
 <% var external_link = config.external_link ? '_blank' : '_self'; %>
 <article class="post">
-    <% if (post.photos && post.photos.length){ %>
-    <!-- 有配图默认渲染第一张 -->
-    <div class="post-cover">
-        <a href="<%- url_for(post.path) %>" target="<%= external_link %>" title="<%= post.title %>"
-           style="background-image:url(<%= post.photos[0] %>)"></a>
-    </div>
-    <% } %>
-    <div class="post-header">
-        <div class="post-meta">
-            <a href="<%= post.authorLink %>" target="<%= external_link %>">
-                <strong><%= post.author %></strong>
-            </a>
-            <em>·</em><%= date(post.date) %>
+    <div>
+        <% if (post.photos && post.photos.length){ %>
+        <!-- 有配图默认渲染第一张 -->
+        <div class="post-cover">
+            <a href="<%- url_for(post.path) %>" target="<%= external_link %>" title="<%= post.title %>"
+               style="background-image:url(<%= post.photos[0] %>)"></a>
         </div>
-        <a class="post-title" href="<%- url_for(post.path) %>" target="<%= external_link %>" title="<%= post.title %>"><%= post.title %></a>
-        <div class="post-meta">
-            <a href="/tags" target="<%= external_link %>"><i class="fa fa-tags"></i></a>
-            <% post.tags.each((tag)=>{ %>
-                <em>·</em>
-                <a href="<%= tag.permalink %>" target="<%= external_link %>"><%= tag.name %></a>
-            <% }) %>
+        <% } %>
+        <div class="post-header">
+            <a class="post-title" href="<%- url_for(post.path) %>" target="<%= external_link %>" title="<%= post.title %>"><%= post.title %></a>
+        </div>
+        <div class="post-desc">
+            <%- strip_html(post.excerpt || post.description || post.title) %>
         </div>
     </div>
-    <div class="post-desc">
-        <%= post.description || post.title %>
+    <div class="post-meta">
+        <a href="<%= post.originLink || config.url %>" target="<%= external_link %>">
+            <strong><%= post.originAuthor || config.author %></strong>
+        </a>
+        <em>·</em><%= date(post.date) %>
+        <em>·</em>
+        <i class="fa fa-book"></i>
+        <% post.categories.each((tag)=>{ %>
+            &nbsp;
+            <a href="<%= url_for(tag.path) %>" target="<%= external_link %>"><%= tag.name %></a>
+        <% }) %>
     </div>
 </article>
 

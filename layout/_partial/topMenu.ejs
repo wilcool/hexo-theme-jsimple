@@ -1,0 +1,21 @@
+<div class="page-title">
+    <ul>
+        <li><a href="/"><%= __('home') %></a></li>
+        <!-- custom single page of topMenus -->
+        <% for (let key in theme.topMenu){ %>
+        <% let val = theme.topMenu[key]; %>
+        <li><a href="/<%= val %>"><%= key %></a></li>
+        <% } %>
+
+        <% if (is_category()){ %>
+        <li class="active">
+            <a href="/"><i class="fa fa-book"></i><em>·</em><%= page.category %></a>
+        </li>
+        <% } else if (is_tag()){ %>
+        <li class="active">
+            <a href="/"><i class="fa fa-tags"></i><em>·</em><%= page.tag %></a>
+        </li>
+        <% } %>
+        <%- partial('_widget/search-bar', null, {cache: !config.relative_link}) %>
+    </ul>
+</div>

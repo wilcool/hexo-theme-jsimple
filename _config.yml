@@ -1,70 +1,99 @@
 # site name
-siteName: 说IT
-shortName: 说
-
+siteName: 老王博客
+shortName: 王
 
 # full https model which means #Content-Security-Policy = upgrade-insecure-requests# in meat tag
 fullHttps: false
 
 # favicon
-favicon: /images/favicon.png
+favicon: /favicon.ico
 # unique avatar
-avatarShow: false
-avatarImage: /images/favicon.png
+avatarShow: true
+avatarImage: /images/avatar.png
 
-# Home page sort type: -1: newer first，1: older first.
-homePageSortType: -1
-# Home page article shown number)
-homeArticleShown: 10
-
+# Set default keywords (Use a comma to separate)
+keywords: "个人博客, 王风宇个人博客, 个人博客系统, 老王博客, 王风宇"
 
 # your site build time or domain buy time
-siteBuildingTime: 08/20/2014
+siteBuildingTime: 02/02/2017
 
 
 # Top navigate menu name
 ## Notice:
 ## Name order decide show index.The name also called category alias,so you must set category alias before start server.
 ## BTW,'category_map' and 'tag_map' field in site '_config.yml' file must one to one correspondence with menus below.
-menu:
-   前端: big-front-end
-   后台: server-side
-   设计: design
-   资源: resource
+topMenu:
+   图册: pictures
+#   简历: resume
 
 # Left menu of single pages settings
 ## Notice: faName is FontAwesome style name
 leftPagesMenu:
-- uri: cross_fire
-  title: 穿越火线
-  faName: fa-wifi
-- uri: help
-  title: 急救中心
+- uri: archives
+  title: 归档
+  faName: fa-archives
+- uri: categories
+  title: 分类
+  faName: fa-book
+- uri: tags
+  title: 标签
+  faName: fa-tags
+- uri: about
+  title: 关于
   faName: fa-question-circle
 
 
 # cover info config
-coverTitle: 聊技术，谈情怀
-coverDescription: 一个关注技术与人文的IT博客
+coverTitle: 一个程序员
+coverDescription: 一个站在java开发之路上的草根程序员个人博客网站
 
 # sns url
 sns:
-  telegram: http://t.me/codeist
-  instagram: https://www.instagram.com/coder.thomas/
-  twitter: https://twitter.com/tangkunyin
-  github: https://github.com/tangkunyin
+  github: https://gitee.com/wilco
+  send-o: mailto:wfyv@qq.com
 
 # your article copyright or content declare
-postDeclare: 本文内容仅作为作者个人兴趣与观点，不代表所在公司及团队的观点和决策。若有不恰当之处，望不吝赐教
+postDeclare: 如果您觉得本博客还不错，欢迎继续关注本博客，欢迎多提宝贵意见，非常感谢！
 
-# Git-pages server info
-pageServerName: Coding
-pageServerUrl: https://coding.net/register?key=bcace447-fa41-4579-9783-86fdf0f723e2
+# reward of post enable
+reward:
+  enable: false
+  image: /images/donate-qr.jpg
 
+# wechat image
+wechat:
+  enable: true
+  image: /images/qrcode.jpg
+
+# Code Highlight theme
+# Available value:
+#    normal | night | night eighties | night blue | night bright
+# https://github.com/chriskempson/tomorrow-theme
+highlight_theme: night
+
+# Show number of visitors to each article.
+# You can visit https://leancloud.cn get AppID and AppKey.
+# if is false , default use busuanzi
+leancloud_visitors:
+  enable: false
+  app_id: 
+  app_key: 
+
+# Baidu Analytics ID
+baidu_analytics: 
+# Baidu push
+baidu_push: false
 
 ## Comments settings.You can choose only ONE to display.
+# changyan
+changyan:
+  enable: false
+  appid: 
+  appkey: 
+
 # disqus shortName,
 disqus_shortname:
+
 # Gitment
 # Introduction: https://imsun.net/posts/gitment-introduction/
 gitment:

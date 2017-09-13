@@ -1,15 +1,15 @@
 <div class="main-inner">
     <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
         <div class="post-header">
-            <h2 class="post-title post-title-c"><%= __('tagcloud') %></h2>
-            <h3 class="post-title-s"><%= _p('tag_total_count',site.tags.length) %></h3>
+            <h2 class="post-title post-title-c"><%= __('categories') %></h2>
+            <h3 class="post-title-s"><%= _p('category_total_count',site.categories.length) %></h3>
         </div>
         <!--<p><img src="/images/tags-bg.jpg" alt="tags-bg" class="page-img"></p>-->
         <div class="post-content markdown-body" itemprop="articleBody">
             <%- page.content %>
             <ul class="tag-list">
-                <% site.tags.sort('name').map(function(tag){  %>
-                <li><a href="<%- url_for(tag.path) %>"><%= tag.name %>(<%= tag.length %>)</a></li>
+                <% site.categories.sort('name').map(function(cat){  %>
+                <li><a href="<%- url_for(cat.path) %>"><%= cat.name %>(<%= cat.length %>)</a></li>
                 <% }) %>
             </ul>
         </div>
