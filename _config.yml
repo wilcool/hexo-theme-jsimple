@@ -84,6 +84,10 @@ baidu_analytics:
 # Baidu push
 baidu_push: false
 
+#google-site-verification
+#https://search.google.com/search-console
+google_site_verification: 
+
 ## Comments settings.You can choose only ONE to display.
 # changyan
 changyan:
